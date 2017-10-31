@@ -4,6 +4,9 @@
 // Construct sorted sequences and call functions that 
 //   process the sorted sequences.
 
+// Jarrett Nordin
+// lab6-jnordin4
+
 
 #include "RandomUtilities.h"
 #include "ContainerPrinting.h"
@@ -63,8 +66,36 @@ getWords(size_t numWords, size_t wordLength, string alphabet)
 double
 mostIsolated(vector<double> & number)
 {
-	// STUB  STUB  STUB
-	return -123.456;
+	double first(0), second(0), diff(0), prev(0), maxdiff(-10), rtn;
+	std::vector<double>::iterator iter;
+	for (iter = number.begin(); iter != number.end(); iter++)
+	{
+		if (iter == number.begin())
+		{
+			first = *iter;
+		}
+		else
+		{
+			second = *iter;
+			diff = second - first;
+			if (diff > maxdiff)
+			{
+				if (diff < prev)
+				{
+					rtn = first;
+				}
+				else
+				{
+					rtn = second;
+				}
+				maxdiff = diff;
+			}
+			first = second;
+			prev = diff;
+		}
+		
+	}
+	return rtn;
 }
 
 
@@ -74,8 +105,30 @@ mostIsolated(vector<double> & number)
 int
 unmatched(list<string> & A, list<string> & B)
 {
-	// STUB  STUB  STUB
-	return -1;
+	std::list<string>::iterator iterA;
+	std::list<string>::iterator iterB;
+	bool found = false;
+	int rtn(0);
+	for (iterA = A.begin(); iterA != A.end(); iterA++)
+	{
+		for (iterB = B.begin(); iterB != B.end(); iterB++)
+		{
+			if (*iterA == *iterB)
+			{
+				found = true;
+				break;
+			}
+		}
+		if (!found)
+		{
+			rtn++;
+		}
+		else
+		{
+			found = false;
+		}
+	}
+	return rtn;
 }
 
 
@@ -169,4 +222,12 @@ main()
 	}
 
 	return 0;
+	// production run using <1000000, 552>
+	// constructed in 2.23 seconds
+	// calulated in 1.09 seconds
+
+	// production run using <60000, 5, abcdefg, 557>
+	// constructed in 4.29 seconds
+	// stalls out and does not complete
+
 }
